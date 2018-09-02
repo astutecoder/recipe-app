@@ -11,9 +11,23 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/{path?}', function($path = null){
+Route::get('/', function () {
     return view('welcome');
-})->where('path', '.*');
+});
+Route::resource('recipe', 'V1\RecipeController');
+//Route::get('/create', function(){
+//    $this->middleware('auth');
+//    return view('recipeadd');
+//});
+//Route::get('/{path?}', function($path = null){
+//    return view('welcome');
+//})->where('path', '.*');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('use', function(){
+    $arr = ["a"=>"abcd"];
+    return response()->json($arr);
+});

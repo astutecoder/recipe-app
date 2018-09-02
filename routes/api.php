@@ -16,8 +16,10 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
 Route::middleware('api')->group(function(){
-    Route::get('/user', function(){
-        return view('recipeadd');
+    Route::get('use', function(){
+        $arr = ["a"=>"abcd"];
+        return response()->json($arr);
     });
 });

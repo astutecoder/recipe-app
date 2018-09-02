@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Recipe;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RecipeController extends Controller
 {
@@ -12,6 +14,11 @@ class RecipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
@@ -24,7 +31,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        return view('recipeadd');
     }
 
     /**
@@ -35,7 +42,11 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client(['timeout'  => 5, 'headers'=> ['Accept'=>'application/json']]);
+        $response = $client->request('GET','http://localhost/use')->getBody();
+
+
+        dd(json_decode($response));
     }
 
     /**
