@@ -17,9 +17,6 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::middleware('api')->group(function(){
-    Route::get('use', function(){
-        $arr = ["a"=>"abcd"];
-        return response()->json($arr);
-    });
+Route::middleware('auth:api')->group(function(){
+    Route::post('add-recipe', 'V1\RecipeController@add_recipe');
 });

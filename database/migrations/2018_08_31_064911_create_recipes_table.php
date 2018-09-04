@@ -23,6 +23,7 @@ class CreateRecipesTable extends Migration
             $table->text('steps');
             $table->text('tips');
             $table->string('source', 255);
+            $table->string('image');
             $table->timestamps();
         });
     }
