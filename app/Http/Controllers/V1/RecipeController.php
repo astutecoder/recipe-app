@@ -17,12 +17,12 @@ class RecipeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index', 'show', 'edit']);
     }
 
     public function index()
     {
-        return redirect('recipe/create');
+        return view('');
     }
 
     /**
@@ -112,7 +112,7 @@ class RecipeController extends Controller
             $res = json_decode($response->getBody());
             echo $res->message;
 
-            return redirect('recipe/create');
+            return redirect('/');
         }
     }
 
