@@ -18,5 +18,6 @@ use Illuminate\Http\Request;
 //});
 
 Route::middleware('auth:api')->group(function(){
-    Route::post('add-recipe', 'V1\RecipeController@add_recipe');
+    Route::post('v1/add-recipe', 'V1\RecipeController@add_recipe');
+    Route::get('v1/get-recipes', 'V1\RecipeController@get_recipes');
 });

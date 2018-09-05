@@ -6,6 +6,7 @@ use App\Recipe;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Mockery\Exception;
 
 class RecipeController extends Controller
@@ -22,7 +23,7 @@ class RecipeController extends Controller
 
     public function index()
     {
-        return view('');
+        return view('recipe');
     }
 
     /**
@@ -60,14 +61,14 @@ class RecipeController extends Controller
 
         if ($isValid) {
             $client = new Client([
-                'base_uri' => 'http://localhost:8888/recipeapi/public/',
+                'base_uri' => 'http://localhost:8888/recipeapi/public/api/v1/',
                 'timeout' => 5,
                 'headers' => [
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer 0mXTxjf6BkzZ5FIj7qbvW9SOBIeJY1tr1WZyBttEoKuzmTlRvA6jiXWERT4Z'
                 ]
             ]);
-            $response = $client->post('api/add-recipe',
+            $response = $client->post('add-recipe',
                 ['multipart' => [
                     [
                         'name' => 'title',
@@ -112,7 +113,7 @@ class RecipeController extends Controller
             $res = json_decode($response->getBody());
             echo $res->message;
 
-            return redirect('/');
+            return redirect('recipe');
         }
     }
 
@@ -163,8 +164,9 @@ class RecipeController extends Controller
 
     public function add_recipe(Request $request)
     {
-        try{
-            $file_name = $request->file('food_img')->getClientOriginalName();           $file_stored = '';
+        try {
+            $file_name = $request->file('food_img')->getClientOriginalName();
+            $file_stored = '';
 
             $recipe = new Recipe();
             $recipe->title = $request->input('title');
@@ -179,15 +181,20 @@ class RecipeController extends Controller
 
             $save_status = $recipe->save();
 
-            if ($save_status){
+            if ($save_status) {
                 $file_stored = $request->file('food_img')->storeAs('public/food_image', $file_name);
             }
 
-            return response()->json(['message'=>'Recipe created successfully'], 201);
-        }
-        catch (Exception $error){
-            return response()->json(['message'=>$error->getMessage()], $error->getCode());
+            return response()->json(['message' => 'Recipe created successfully'], 201);
+        } catch (Exception $error) {
+            return response()->json(['message' => $error->getMessage()], $error->getCode());
         }
 
+    }
+
+    public function get_recipes()
+    {
+        $recipes = Recipe::all();
+        return response()->json($recipes, 200);
     }
 }

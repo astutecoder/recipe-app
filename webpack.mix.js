@@ -12,5 +12,5 @@ let mix = require('laravel-mix');
  */
 
 mix.react('resources/assets/js/app.js', 'public/js/app.js')
-    .react('resources/assests/js/react/recipe.routes.js', 'public/js/recipe.js')
+    .react('resources/assets/js/react/RecipeApp.js', 'public/js/recipe.js')
    .sass('resources/assets/sass/app.scss', 'public/css');
