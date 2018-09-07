@@ -1,32 +1,44 @@
-import React, {Component} from 'react'
-import axios from 'axios';
+import React, {Component} from 'react';
 import RecipeListItem from "./RecipeListItem";
+import {connect} from "react-redux";
+import {getAllRecipe, resetAllRecipe} from "../../actions/recipe.actions";
+import RecipePagination from './RecipePagination';
 
-export default class RecipeHome extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            recipes: [],
+class RecipeList extends Component {
+    getPageLinks = (e) => {
+        let pageLinksLi = [];
+        for(let i = 1; i <= this.props.url.last_page; i++){
+            pageLinksLi.push(i);
         }
+        return pageLinksLi;
     }
 
-    componentWillMount() {
-        axios.get('http://localhost:8000/api/v1/get-recipes',{
-            'headers': {
-                'Authorization' : 'Bearer 0mXTxjf6BkzZ5FIj7qbvW9SOBIeJY1tr1WZyBttEoKuzmTlRvA6jiXWERT4Z'
-            }
-        })
-            .then(response => this.setState({recipes: response.data}))
-            .catch(error => console.log(error))
+    componentDidMount() {
+        this.props.getAllRecipe();
     }
 
     render() {
-        let recipes = this.state.recipes.map(recipe => (recipe));
-        console.log(recipes);
         return (
-            <div>
-                {recipes.map(recipe => (<RecipeListItem key={recipe.id} recipe={recipe} />))}
+            <div className="col-md-12">
+                <div className="row">
+                    <div className="card-columns">
+                        {this.props.recipes.map(recipe => (
+                                <RecipeListItem key={recipe.id} recipe={recipe}/>
+                            )
+                        )}
+                    </div>
+
+                    {(this.props.url.last_page !== 1) && 
+                        <RecipePagination apiLink="/api/v1/get-recipes" url={this.props.url} getAllRecipe={this.props.getAllRecipe}/>
+                    }
+                </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    recipes: state.recipes.items,
+    url: state.recipes.url
+})
+export default connect(mapStateToProps, {getAllRecipe, resetAllRecipe})(RecipeList);

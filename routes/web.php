@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('beef-recipe');
 });
-Route::resource('recipe', 'V1\RecipeController');
+Route::resource('beef-recipe', 'V1\RecipeController');
 //Route::get('/create', function(){
 //    $this->middleware('auth');
 //    return view('recipeadd');

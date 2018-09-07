@@ -194,7 +194,7 @@ class RecipeController extends Controller
 
     public function get_recipes()
     {
-        $recipes = Recipe::all();
+        $recipes = Recipe::orderBy('id')->paginate(3);
         return response()->json($recipes, 200);
     }
 }
