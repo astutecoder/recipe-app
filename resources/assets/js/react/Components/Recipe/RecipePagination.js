@@ -7,7 +7,19 @@ export default class RecipePagination extends Component {
         for(let i = 1; i <= this.props.requiredPages; i++){
             pageLinksLi.push(i);
         }
-        return pageLinksLi;
+
+        if(this.props.requiredPages > 10){
+            console.log("I'm here and total page required: ", this.props.requiredPages);
+            let {page=1} = this.props.extractQuery();
+            let fromPageIndex = (pageLinksLi.indexOf(+page) > 4) ? (pageLinksLi.indexOf(+page)-4) : 0;
+            let tillPageIndex = ((+page+5) > this.props.requiredPages)? (this.props.requiredPages+1) : (pageLinksLi.indexOf(+page) <= 4 ? 10 :(+page+5));
+            
+            let pageLinksLiToBeShown = pageLinksLi.slice(fromPageIndex, tillPageIndex);
+            console.log('pageLinksLiToBeShown: ', pageLinksLiToBeShown);
+            return pageLinksLiToBeShown;
+        }else{
+            return pageLinksLi;
+        }
     }
 
     prevLink = () => {
@@ -20,6 +32,7 @@ export default class RecipePagination extends Component {
     }
 
     render() {
+        console.log(this.getPageLinks());
         return (
             <div className="w-100">
                 <hr/>
@@ -36,7 +49,7 @@ export default class RecipePagination extends Component {
                             <Link to={`/recipe?page=${this.prevLink()}`}>                            
                                 <li className="page-item">
                                     <span className="page-link">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
+                                    <span className="sr-only">Previous</span>
                                 </li>
                             </Link>
                         }
@@ -53,7 +66,7 @@ export default class RecipePagination extends Component {
                             <Link to={`/recipe?page=${this.nextLink()}`}>                            
                                 <li className="page-item">
                                     <span className="page-link">&raquo;</span>
-                                    <span class="sr-only">Next</span>
+                                    <span className="sr-only">Next</span>
                                 </li>
                             </Link>
                         }
