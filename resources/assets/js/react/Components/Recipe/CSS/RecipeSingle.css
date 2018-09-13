@@ -1,0 +1,32 @@
+.cited-list li{    
+    border-right: 1px solid #6c757d;
+    font-size: .8rem;
+    line-height: 1.5;
+    list-style: none;
+    padding: 0 5px;
+}
+.cited-list li:first-child{
+    padding-left: 0;
+}
+.cited-list li:last-child{
+    border-right: none;
+    padding-right: 0;
+}
+
+
+
+@media(min-width: 768px){
+    .cited-list li{
+        border-right: none;
+        padding: 0;    
+    }
+}
+
+@media(max-width:767px){
+    .card-img-top{
+        background-position: center !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        height: 250px;
+    }
+}

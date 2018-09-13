@@ -12,22 +12,19 @@
 */
 
 Route::get('/', function () {
+    // return view('recipe');
     return redirect('beef-recipe');
 });
 Route::resource('beef-recipe', 'V1\RecipeController');
-//Route::get('/create', function(){
-//    $this->middleware('auth');
-//    return view('recipeadd');
-//});
-//Route::get('/{path?}', function($path = null){
-//    return view('welcome');
-//})->where('path', '.*');
+Route::get('/create', function(){
+    $this->middleware('auth');
+    return view('recipeadd');
+});
+
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('use', function(){
-    $arr = ["a"=>"abcd"];
-    return response()->json($arr);
-});
+Route::get('/{path?}', function($path = null){
+    return view('recipe');
+})->where('path', '.*');

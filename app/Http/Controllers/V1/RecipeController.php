@@ -18,12 +18,12 @@ class RecipeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show', 'edit']);
+        $this->middleware('auth')->except(['index']);
     }
 
     public function index()
     {
-        return view('recipe');
+        return redirect('recipe');
     }
 
     /**
@@ -61,7 +61,7 @@ class RecipeController extends Controller
 
         if ($isValid) {
             $client = new Client([
-                'base_uri' => 'http://localhost:8888/recipeapi/public/api/v1/',
+                'base_uri' => 'localhost:8888/recipeapi/public/api/v1/',
                 'timeout' => 5,
                 'headers' => [
                     'Accept' => 'application/json',
@@ -113,7 +113,7 @@ class RecipeController extends Controller
             $res = json_decode($response->getBody());
             echo $res->message;
 
-            return redirect('recipe');
+            return redirect('beef-recipe');
         }
     }
 
@@ -125,7 +125,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return redirect('recipe');
     }
 
     /**
@@ -194,7 +194,7 @@ class RecipeController extends Controller
 
     public function get_recipes()
     {
-        $recipes = Recipe::orderBy('id')->paginate(3);
+        $recipes = Recipe::all();
         return response()->json($recipes, 200);
     }
 }

@@ -2,7 +2,7 @@
 
 @section('title', 'Add recipe')
 @section('main_content')
-    <form method="POST" action="{{ url('recipe') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ url('beef-recipe') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="container mt-3">
             <div class="row">
